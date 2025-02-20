@@ -1,0 +1,47 @@
+name: Build Capacitor App (iOS & Android)
+
+on:
+  workflow_dispatch: # Déclenchement manuel
+
+jobs:
+  build-ios:
+    name: Build iOS App
+    runs-on: macos-latest  # Nécessaire pour Xcode
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # Mets ta version ici si besoin
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Build iOS app
+        run: npx cap build ios
+
+  build-android:
+    name: Build Android App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # Mets ta version ici si besoin
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build Android app
+        run: npx cap build android
